@@ -42,7 +42,7 @@ API_HASH = env.get_value('API_HASH')
 PHONE = env.get_value('PHONE')
 
 # google table
-GOOGLE_CONFIG = 'mailing-hb-test-57d7a15b16a4.json'
+GOOGLE_CONFIG = env.get_value('GOOGLE_CONFIG')
 GOOGLE_EMPLOYEE_TABLE = env.get_value('GOOGLE_EMPLOYEE_TABLE')
 GOOGLE_TEXT_TABLE = env.get_value('GOOGLE_TEXT_TABLE')
 
