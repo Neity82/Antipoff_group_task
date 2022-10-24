@@ -42,7 +42,7 @@ API_HASH = env.get_value('API_HASH')
 PHONE = env.get_value('PHONE')
 
 # google table
-GOOGLE_CONFIG = 'mailing-hb-test-57d7a15b16a4.json'
+GOOGLE_CONFIG = env.get_value('GOOGLE_CONFIG')
 GOOGLE_EMPLOYEE_TABLE = env.get_value('GOOGLE_EMPLOYEE_TABLE')
 GOOGLE_TEXT_TABLE = env.get_value('GOOGLE_TEXT_TABLE')
 
@@ -147,7 +147,35 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # REDIS related settings
 REDIS_HOST = "127.0.0.1"
 REDIS_PORT = "6379"
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
 # Celery Configuration Options
 CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'main_formatter': {
+            'format': '{asctime} - [{levelname}] - {filename} - {message}',
+            'style': '{',
+        }
+    },
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'mailing-error.log',
+            'formatter': 'main_formatter',
+        },
+    },
+    'loggers': {
+        'send_messages': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': False,
+        }
+
+    },
+}
